@@ -40,7 +40,7 @@ abstract class Occurrence {
 
   public static with(value: number, left?: Occurrence, right?: Occurrence) {
     if (typeof left !== undefined && typeof right !== undefined)
-      return new NonLeafEvent(value, left, right);
+      return new NonLeafOccurrence(value, left, right);
     return new LeafOccurrence(value);
   }
 }
