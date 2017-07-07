@@ -33,6 +33,7 @@ abstract class Occurrence {
   abstract normalize(): Occurrence;
   abstract leq(other: Occurrence): boolean;
   abstract join(other: Occurrence): Occurrence;
+  abstract equals(object: any): boolean;
 
   public static zero(): Occurrence {
     return Occurrence.with(0);
