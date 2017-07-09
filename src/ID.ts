@@ -16,15 +16,16 @@
  */
 
 abstract class ID {
-  abstract get left(): ID;
-  abstract get right(): ID;
-  abstract isLeaf(): boolean;
-  abstract isZero(): boolean;
-  abstract isOne(): boolean;
-  abstract normalize(): ID;
-  abstract split(): ID[];
-  abstract sum(other: ID): ID;
-  abstract equals(object: any): boolean;
+  
+  public abstract get left(): ID;
+  public abstract get right(): ID;
+  public abstract isLeaf(): boolean;
+  public abstract isZero(): boolean;
+  public abstract isOne(): boolean;
+  public abstract normalize(): ID;
+  public abstract split(): ID[];
+  public abstract sum(other: ID): ID;
+  public abstract equals(object: any): boolean;
 
   public static zero(): ID {
     return new LeafID(0);
@@ -37,4 +38,5 @@ abstract class ID {
   public static with(left: ID, right: ID): ID {
     return new NonLeafID(left, right);
   }
+
 }

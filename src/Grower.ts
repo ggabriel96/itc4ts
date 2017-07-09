@@ -17,68 +17,68 @@
 
 class Grower {
 
-  public static grow(id: ID, event: Occurrence): Occurrence {
-    return Grower.innerGrow(id, event).event;
+  public static grow(id: ID, occurrence: Occurrence): Occurrence {
+    return Grower.innerGrow(id, occurrence).occurrence;
   }
 
-  private static innerGrow(id: ID, event: Occurrence): GrowResult {
-    if (id.isLeaf()) return Grower.growLeafID(id, event);
-    return Grower.growNonLeafID(id, event);
+  private static innerGrow(id: ID, occurrence: Occurrence): GrowResult {
+    if (id.isLeaf()) return Grower.growLeafID(id, occurrence);
+    return Grower.growNonLeafID(id, occurrence);
   }
 
-  private static growLeafID(id: ID, event: Occurrence): GrowResult {
-    if (id.isOne() && event.isLeaf())
-      return new GrowResult(Occurrence.with(event.value + 1), 0);
-    throw new TypeError("Illegal arguments: " + id + " and " + event);
+  private static growLeafID(id: ID, occurrence: Occurrence): GrowResult {
+    if (id.isOne() && occurrence.isLeaf())
+      return new GrowResult(Occurrence.with(occurrence.value + 1), 0);
+    throw new TypeError("Illegal arguments: " + id + " and " + occurrence);
   }
 
-  private static growNonLeafID(id: ID, event: Occurrence): GrowResult {
-    if (event.isLeaf()) return Grower.growLeafEvent(id, event);
-    if (id.left.isZero()) return Grower.growOnRight(id, event);
-    if (id.right.isZero()) return Grower.growOnLeft(id, event);
-    return Grower.growOnBothSides(id, event);
+  private static growNonLeafID(id: ID, occurrence: Occurrence): GrowResult {
+    if (occurrence.isLeaf()) return Grower.growLeafEvent(id, occurrence);
+    if (id.left.isZero()) return Grower.growOnRight(id, occurrence);
+    if (id.right.isZero()) return Grower.growOnLeft(id, occurrence);
+    return Grower.growOnBothSides(id, occurrence);
   }
 
-  private static growLeafEvent(id: ID, event: Occurrence): GrowResult {
-    let er: GrowResult = Grower.innerGrow(id, Occurrence.with(event.value, Occurrence.zero(), Occurrence.zero()));
-    er.cost = er.cost + event.depth + 1;
+  private static growLeafEvent(id: ID, occurrence: Occurrence): GrowResult {
+    let er: GrowResult = Grower.innerGrow(id, Occurrence.with(occurrence.value, Occurrence.zero(), Occurrence.zero()));
+    er.cost = er.cost + occurrence.depth + 1;
     return er;
   }
 
-  private static growOnRight(id: ID, event: Occurrence): GrowResult {
-    let rightGrowth: GrowResult = Grower.growRight(id, event);
-    return Grower.rightGrowth(event, rightGrowth);
+  private static growOnRight(id: ID, occurrence: Occurrence): GrowResult {
+    let rightGrowth: GrowResult = Grower.growRight(id, occurrence);
+    return Grower.rightGrowth(occurrence, rightGrowth);
   }
 
-  private static growRight(id: ID, event: Occurrence): GrowResult {
-    return Grower.innerGrow(id.right, event.right);
+  private static growRight(id: ID, occurrence: Occurrence): GrowResult {
+    return Grower.innerGrow(id.right, occurrence.right);
   }
 
-  private static rightGrowth(event: Occurrence, growth: GrowResult): GrowResult {
-    let result: Occurrence = Occurrence.with(event.value, event.left, growth.event);
+  private static rightGrowth(occurrence: Occurrence, growth: GrowResult): GrowResult {
+    let result: Occurrence = Occurrence.with(occurrence.value, occurrence.left, growth.occurrence);
     return new GrowResult(result, growth.cost + 1);
   }
 
-  private static growOnLeft(id: ID, event: Occurrence): GrowResult {
-    let leftGrowth: GrowResult = Grower.growLeft(id, event);
-    return Grower.leftGrowth(event, leftGrowth);
+  private static growOnLeft(id: ID, occurrence: Occurrence): GrowResult {
+    let leftGrowth: GrowResult = Grower.growLeft(id, occurrence);
+    return Grower.leftGrowth(occurrence, leftGrowth);
   }
 
-  private static growLeft(id: ID, event: Occurrence): GrowResult {
-    return Grower.innerGrow(id.left, event.left);
+  private static growLeft(id: ID, occurrence: Occurrence): GrowResult {
+    return Grower.innerGrow(id.left, occurrence.left);
   }
 
-  private static leftGrowth(event: Occurrence, growth: GrowResult): GrowResult {
-    let result: Occurrence = Occurrence.with(event.value, growth.event, event.right);
+  private static leftGrowth(occurrence: Occurrence, growth: GrowResult): GrowResult {
+    let result: Occurrence = Occurrence.with(occurrence.value, growth.occurrence, occurrence.right);
     return new GrowResult(result, growth.cost + 1);
   }
 
-  private static growOnBothSides(id: ID, event: Occurrence): GrowResult {
-    let leftGrowth: GrowResult = Grower.growLeft(id, event);
-    let rightGrowth: GrowResult = Grower.growRight(id, event);
+  private static growOnBothSides(id: ID, occurrence: Occurrence): GrowResult {
+    let leftGrowth: GrowResult = Grower.growLeft(id, occurrence);
+    let rightGrowth: GrowResult = Grower.growRight(id, occurrence);
     if (leftGrowth.cost < rightGrowth.cost)
-      return Grower.leftGrowth(event, leftGrowth);
-    return Grower.rightGrowth(event, rightGrowth);
+      return Grower.leftGrowth(occurrence, leftGrowth);
+    return Grower.rightGrowth(occurrence, rightGrowth);
   }
 
 }

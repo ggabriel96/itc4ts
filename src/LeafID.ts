@@ -62,10 +62,8 @@ class LeafID extends ID {
   }
 
   public sum(other: ID): ID {
-    if (this.isZero())
-      return other;
-    if (other.isZero())
-      return this;
+    if (this.isZero()) return other;
+    if (other.isZero()) return this;
     throw new TypeError("Can't sum " + this + " with " + other);
   }
 
@@ -79,5 +77,5 @@ class LeafID extends ID {
   public toString(): string {
     return this.value.toString();
   }
-}
 
+}

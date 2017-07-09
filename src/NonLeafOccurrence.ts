@@ -76,29 +76,24 @@ class NonLeafOccurrence extends Occurrence {
   }
 
   public leq(other: Occurrence): boolean {
-    if (other.isLeaf())
-      return this.leqLeaf(other);
+    if (other.isLeaf()) return this.leqLeaf(other);
     return this.leqNonLeafs(other);
   }
 
   private leqLeaf(other: Occurrence): boolean {
-    return this.value <= other.value &&
-      this.liftedLeft(this).leq(other) &&
-      this.liftedRight(this).leq(other);
+    return this.value <= other.value && this.liftedLeft(this).leq(other) && this.liftedRight(this).leq(other);
   }
 
-  private liftedLeft(event: Occurrence): Occurrence {
-    return event.left.lift(event.value);
+  private liftedLeft(occurrence: Occurrence): Occurrence {
+    return occurrence.left.lift(occurrence.value);
   }
 
-  private liftedRight(event: Occurrence): Occurrence {
-    return event.right.lift(event.value);
+  private liftedRight(occurrence: Occurrence): Occurrence {
+    return occurrence.right.lift(occurrence.value);
   }
 
   private leqNonLeafs(other: Occurrence): boolean {
-    return this.value <= other.value &&
-      this.liftedLeft(this).leq(this.liftedLeft(other)) &&
-      this.liftedRight(this).leq(this.liftedRight(other));
+    return this.value <= other.value && this.liftedLeft(this).leq(this.liftedLeft(other)) &&this.liftedRight(this).leq(this.liftedRight(other));
   }
 
   public join(other: Occurrence): Occurrence {
@@ -108,8 +103,7 @@ class NonLeafOccurrence extends Occurrence {
   }
 
   private joinNonLeaf(other: Occurrence): Occurrence {
-    if (this.value > other.value)
-      return other.join(this);
+    if (this.value > other.value) return other.join(this);
     let join: Occurrence = Occurrence.with(this.value, this.leftJoin(other), this.rightJoin(other));
     return join.normalize();
   }
@@ -125,8 +119,7 @@ class NonLeafOccurrence extends Occurrence {
   }
 
   public equals(object: any): boolean {
-    if (!(object instanceof NonLeafOccurrence))
-      return false;
+    if (!(object instanceof NonLeafOccurrence)) return false;
     let other: NonLeafOccurrence = object as NonLeafOccurrence;
     return this.value == other.value &&
       this.left.equals(other.left) &&
@@ -136,4 +129,5 @@ class NonLeafOccurrence extends Occurrence {
   public toString(): string {
     return "(" + this.value + ", " + this.left + ", " + this.right + ")";
   }
+  
 }

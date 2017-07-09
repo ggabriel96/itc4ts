@@ -16,24 +16,25 @@
  */
 
 abstract class Occurrence {
-  abstract get value(): number;
-  abstract get left(): Occurrence;
-  abstract get right(): Occurrence;
-  abstract min(): number;
-  abstract max(): number;
+
+  public abstract get value(): number;
+  public abstract get left(): Occurrence;
+  public abstract get right(): Occurrence;
+  public abstract min(): number;
+  public abstract max(): number;
 
   public get depth(): number {
     return this.maxDepth(0);
   }
 
   protected abstract maxDepth(depth: number): number;
-  abstract isLeaf(): boolean;
-  abstract lift(m: number): Occurrence;
-  abstract sink(m: number): Occurrence;
-  abstract normalize(): Occurrence;
-  abstract leq(other: Occurrence): boolean;
-  abstract join(other: Occurrence): Occurrence;
-  abstract equals(object: any): boolean;
+  public abstract isLeaf(): boolean;
+  public abstract lift(m: number): Occurrence;
+  public abstract sink(m: number): Occurrence;
+  public abstract normalize(): Occurrence;
+  public abstract leq(other: Occurrence): boolean;
+  public abstract join(other: Occurrence): Occurrence;
+  public abstract equals(object: any): boolean;
 
   public static zero(): Occurrence {
     return Occurrence.with(0);
@@ -44,4 +45,5 @@ abstract class Occurrence {
       return new NonLeafOccurrence(value, left, right);
     return new LeafOccurrence(value);
   }
+  
 }

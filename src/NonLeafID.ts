@@ -16,6 +16,7 @@
  */
 
 class NonLeafID extends ID {
+  
   private readonly _left: ID;
   private readonly _right: ID;
 
@@ -85,10 +86,8 @@ class NonLeafID extends ID {
   }
 
   public sum(other: ID): ID {
-    if (other.isZero())
-      return this;
-    if (!other.isLeaf())
-      return this.sumNonLeaf(other);
+    if (other.isZero()) return this;
+    if (!other.isLeaf()) return this.sumNonLeaf(other);
     throw new TypeError("Can't sum " + this + " with 1.");
   }
 
@@ -110,5 +109,5 @@ class NonLeafID extends ID {
   public toString(): string {
     return "(" + this.left + ", " + this.right + ")";
   }
-}
 
+}

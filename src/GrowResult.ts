@@ -18,14 +18,15 @@
 class GrowResult {
 
   public cost: number;
-  private _event: Occurrence;
+  private _occurrence: Occurrence;
 
-  constructor(event: Occurrence, cost: number) {
-    this._event = event;
+  constructor(occurrence: Occurrence, cost: number) {
+    this._occurrence = occurrence;
     this.cost = cost;
   }
 
-  public get event() {
-    return this._event;
+  public get occurrence() {
+    return this._occurrence;
   }
+  
 }

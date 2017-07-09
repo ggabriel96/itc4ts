@@ -69,8 +69,7 @@ class LeafOccurrence extends Occurrence {
   }
 
   public join(other: Occurrence): Occurrence {
-    if (other.isLeaf())
-      return new LeafOccurrence(Math.max(this.value, other.value));
+    if (other.isLeaf()) return new LeafOccurrence(Math.max(this.value, other.value));
     return Occurrence.with(this.value, Occurrence.zero(), Occurrence.zero()).join(other);
   }
 
@@ -84,4 +83,5 @@ class LeafOccurrence extends Occurrence {
   public toString(): string {
     return this.value.toString();
   }
+  
 }
