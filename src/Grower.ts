@@ -15,7 +15,12 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-class Grower {
+import { ID } from "./ID";
+import { GrowResult } from "./GrowResult";
+import { Occurrence } from "./Occurrence";
+import { Occurrences } from "./Occurrences";
+
+export class Grower {
 
   public static grow(id: ID, occurrence: Occurrence): Occurrence {
     return Grower.innerGrow(id, occurrence).occurrence;
@@ -28,7 +33,7 @@ class Grower {
 
   private static growLeafID(id: ID, occurrence: Occurrence): GrowResult {
     if (id.isOne() && occurrence.isLeaf())
-      return new GrowResult(Occurrence.with(occurrence.value + 1), 0);
+      return new GrowResult(Occurrences.with(occurrence.value + 1), 0);
     throw new TypeError("Illegal arguments: " + id + " and " + occurrence);
   }
 
@@ -40,7 +45,7 @@ class Grower {
   }
 
   private static growLeafEvent(id: ID, occurrence: Occurrence): GrowResult {
-    let er: GrowResult = Grower.innerGrow(id, Occurrence.with(occurrence.value, Occurrence.zero(), Occurrence.zero()));
+    let er: GrowResult = Grower.innerGrow(id, Occurrences.with(occurrence.value, Occurrences.zero(), Occurrences.zero()));
     er.cost = er.cost + occurrence.depth + 1;
     return er;
   }
@@ -55,7 +60,7 @@ class Grower {
   }
 
   private static rightGrowth(occurrence: Occurrence, growth: GrowResult): GrowResult {
-    let result: Occurrence = Occurrence.with(occurrence.value, occurrence.left, growth.occurrence);
+    let result: Occurrence = Occurrences.with(occurrence.value, occurrence.left, growth.occurrence);
     return new GrowResult(result, growth.cost + 1);
   }
 
@@ -69,7 +74,7 @@ class Grower {
   }
 
   private static leftGrowth(occurrence: Occurrence, growth: GrowResult): GrowResult {
-    let result: Occurrence = Occurrence.with(occurrence.value, growth.occurrence, occurrence.right);
+    let result: Occurrence = Occurrences.with(occurrence.value, growth.occurrence, occurrence.right);
     return new GrowResult(result, growth.cost + 1);
   }
 

@@ -15,7 +15,11 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-class Filler {
+import { ID } from "./ID";
+import { Occurrence } from "./Occurrence";
+import { Occurrences } from "./Occurrences";
+
+export class Filler {
 
   public static fill(id: ID, occurrence: Occurrence): Occurrence {
     if (id.isLeaf()) return Filler.fillWithLeafID(id, occurrence);
@@ -25,7 +29,7 @@ class Filler {
 
   private static fillWithLeafID(leafID: ID, occurrence: Occurrence): Occurrence {
     if (leafID.isZero()) return occurrence;
-    return Occurrence.with(occurrence.max());
+    return Occurrences.with(occurrence.max());
   }
 
   private static fillNonLeafs(id: ID, occurrence: Occurrence): Occurrence {
@@ -37,7 +41,7 @@ class Filler {
   private static fillLeftOneID(id: ID, occurrence: Occurrence): Occurrence {
     let filledRight: Occurrence = Filler.fillRight(id, occurrence);
     let max: number = Math.max(occurrence.left.max(), filledRight.min());
-    return Occurrence.with(occurrence.value, Occurrence.with(max), filledRight).normalize();
+    return Occurrences.with(occurrence.value, Occurrences.with(max), filledRight).normalize();
   }
 
   private static fillRight(id: ID, occurrence: Occurrence): Occurrence {
@@ -47,7 +51,7 @@ class Filler {
   private static fillRightOneID(id: ID, occurrence: Occurrence): Occurrence {
     let filledLeft: Occurrence = Filler.fillLeft(id, occurrence);
     let max: number = Math.max(occurrence.right.max(), filledLeft.min());
-    return Occurrence.with(occurrence.value, filledLeft, Occurrence.with(max)).normalize();
+    return Occurrences.with(occurrence.value, filledLeft, Occurrences.with(max)).normalize();
   }
 
   private static fillLeft(id: ID, occurrence: Occurrence): Occurrence {
@@ -55,7 +59,7 @@ class Filler {
   }
 
   private static fillLeftRight(id: ID, occurrence: Occurrence): Occurrence {
-    return Occurrence.with(occurrence.value, Filler.fillLeft(id, occurrence), Filler.fillRight(id, occurrence)).normalize();
+    return Occurrences.with(occurrence.value, Filler.fillLeft(id, occurrence), Filler.fillRight(id, occurrence)).normalize();
   }
-  
+
 }

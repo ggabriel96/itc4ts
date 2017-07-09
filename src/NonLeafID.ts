@@ -15,8 +15,11 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-class NonLeafID extends ID {
-  
+import { ID } from "./ID";
+import { IDs } from "./IDs";
+
+export class NonLeafID extends ID {
+
   private readonly _left: ID;
   private readonly _right: ID;
 
@@ -52,10 +55,10 @@ class NonLeafID extends ID {
 
   private _normalize(left: ID, right: ID): ID {
     if (left.isZero() && right.isZero())
-      return ID.zero();
+      return IDs.zero();
     if (left.isOne() && right.isOne())
-      return ID.one();
-    return ID.with(left, right);
+      return IDs.one();
+    return IDs.with(left, right);
   }
 
   public split(): ID[] {
@@ -64,24 +67,24 @@ class NonLeafID extends ID {
     if (this.right.isZero())
       return this.splitWithRightZero();
     return [
-      ID.with(this.left, ID.zero()),
-      ID.with(ID.zero(), this.right)
+      IDs.with(this.left, IDs.zero()),
+      IDs.with(IDs.zero(), this.right)
     ];
   }
 
   private splitWithLeftZero(): ID[] {
     let rightSplit: ID[] = this.right.split();
     return [
-      ID.with(ID.zero(), rightSplit[0]),
-      ID.with(ID.zero(), rightSplit[1])
+      IDs.with(IDs.zero(), rightSplit[0]),
+      IDs.with(IDs.zero(), rightSplit[1])
     ];
   }
 
   private splitWithRightZero(): ID[] {
     let leftSplit: ID[] = this.left.split();
     return [
-      ID.with(leftSplit[0], ID.zero()),
-      ID.with(leftSplit[1], ID.zero())
+      IDs.with(leftSplit[0], IDs.zero()),
+      IDs.with(leftSplit[1], IDs.zero())
     ];
   }
 
@@ -94,7 +97,7 @@ class NonLeafID extends ID {
   private sumNonLeaf(other: ID): ID {
     let leftSum: ID = this.left.sum(other.left);
     let rightSum: ID = this.right.sum(other.right);
-    let sum: ID = ID.with(leftSum, rightSum);
+    let sum: ID = IDs.with(leftSum, rightSum);
     return sum.normalize();
   }
 

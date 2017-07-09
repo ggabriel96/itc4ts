@@ -15,6 +15,9 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+import { Stamp } from "./Stamp";
+import { Occurrence } from "./Occurrence";
+
 /**
  * Reasons about the order of two events.
  */
@@ -157,5 +160,5 @@ class Causality {
   public static happensBefore(e1: Occurrence, e2: Occurrence): boolean {
     return Causality.compare(0, e1, e2) == Order.HAPPENS_BEFORE;
   }
-  
+
 }

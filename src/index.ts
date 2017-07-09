@@ -1,0 +1,1 @@
+export { Stamp } from "./Stamp";

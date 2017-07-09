@@ -15,16 +15,22 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-export abstract class ID {
+import { NonLeafID } from "./NonLeafID";
+import { LeafID } from "./LeafID";
+import { ID } from "./ID";
 
-  public abstract get left(): ID;
-  public abstract get right(): ID;
-  public abstract isLeaf(): boolean;
-  public abstract isZero(): boolean;
-  public abstract isOne(): boolean;
-  public abstract normalize(): ID;
-  public abstract split(): ID[];
-  public abstract sum(other: ID): ID;
-  public abstract equals(object: any): boolean;
+export class IDs {
+
+  public static zero(): ID {
+    return new LeafID(0);
+  }
+
+  public static one(): ID {
+    return new LeafID(1);
+  }
+
+  public static with(left: ID, right: ID): ID {
+    return new NonLeafID(left, right);
+  }
 
 }

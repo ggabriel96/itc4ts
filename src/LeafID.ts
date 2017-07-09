@@ -15,7 +15,10 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-class LeafID extends ID {
+import { IDs } from "./IDs";
+import { ID } from "./ID";
+
+export class LeafID extends ID {
 
   private readonly _value: number;
 
@@ -54,10 +57,10 @@ class LeafID extends ID {
 
   public split(): ID[] {
     if (this.isZero())
-      return [ID.zero(), ID.zero()];
+      return [IDs.zero(), IDs.zero()];
     return [
-      ID.with(ID.one(), ID.zero()),
-      ID.with(ID.zero(), ID.one())
+      IDs.with(IDs.one(), IDs.zero()),
+      IDs.with(IDs.zero(), IDs.one())
     ];
   }
 

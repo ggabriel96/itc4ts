@@ -15,14 +15,21 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-class Stamp {
+import { ID } from "./ID";
+import { IDs } from "./IDs";
+import { Filler } from "./Filler";
+import { Grower } from "./Grower";
+import { Occurrence } from "./Occurrence";
+import { Occurrences } from "./Occurrences";
+
+export class Stamp {
 
   public readonly occurrence: Occurrence;
   private readonly id: ID;
 
   constructor(id?: ID, occurrence?: Occurrence) {
-    this.id = id || ID.one();
-    this.occurrence = occurrence || Occurrence.zero();
+    this.id = id || IDs.one();
+    this.occurrence = occurrence || Occurrences.zero();
   }
 
   public fork(): Stamp[] {
@@ -36,7 +43,7 @@ class Stamp {
   public peek(): Stamp[] {
     return [
       new Stamp(this.id, this.occurrence),
-      new Stamp(ID.zero(), this.occurrence)
+      new Stamp(IDs.zero(), this.occurrence)
     ];
   }
 

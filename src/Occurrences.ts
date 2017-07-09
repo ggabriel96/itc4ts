@@ -15,16 +15,20 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-export abstract class ID {
+import { NonLeafOccurrence } from "./NonLeafOccurrence";
+import { LeafOccurrence } from "./LeafOccurrence";
+import { Occurrence } from "./Occurrence";
 
-  public abstract get left(): ID;
-  public abstract get right(): ID;
-  public abstract isLeaf(): boolean;
-  public abstract isZero(): boolean;
-  public abstract isOne(): boolean;
-  public abstract normalize(): ID;
-  public abstract split(): ID[];
-  public abstract sum(other: ID): ID;
-  public abstract equals(object: any): boolean;
+export class Occurrences {
+
+  public static zero(): Occurrence {
+    return Occurrences.with(0);
+  }
+
+  public static with(value: number, left?: Occurrence, right?: Occurrence) {
+    if (typeof left !== "undefined" && typeof right !== "undefined")
+      return new NonLeafOccurrence(value, left, right);
+    return new LeafOccurrence(value);
+  }
 
 }

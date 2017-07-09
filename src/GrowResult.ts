@@ -15,18 +15,16 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-class GrowResult {
+import { Occurrence } from "./Occurrence";
+
+export class GrowResult {
 
   public cost: number;
-  private _occurrence: Occurrence;
+  public readonly occurrence: Occurrence;
 
   constructor(occurrence: Occurrence, cost: number) {
-    this._occurrence = occurrence;
+    this.occurrence = occurrence;
     this.cost = cost;
   }
 
-  public get occurrence() {
-    return this._occurrence;
-  }
-  
 }

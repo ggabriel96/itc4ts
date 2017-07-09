@@ -15,7 +15,10 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-class LeafOccurrence extends Occurrence {
+import { Occurrence } from "./Occurrence";
+import { Occurrences } from "./Occurrences";
+
+export class LeafOccurrence extends Occurrence {
 
   private readonly _value: number;
 
@@ -70,7 +73,7 @@ class LeafOccurrence extends Occurrence {
 
   public join(other: Occurrence): Occurrence {
     if (other.isLeaf()) return new LeafOccurrence(Math.max(this.value, other.value));
-    return Occurrence.with(this.value, Occurrence.zero(), Occurrence.zero()).join(other);
+    return Occurrences.with(this.value, Occurrences.zero(), Occurrences.zero()).join(other);
   }
 
   public equals(object: any): boolean {
@@ -83,5 +86,5 @@ class LeafOccurrence extends Occurrence {
   public toString(): string {
     return this.value.toString();
   }
-  
+
 }

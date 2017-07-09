@@ -1,0 +1,28 @@
+{
+  "name": "itc",
+  "version": "1.0.0-rc.1",
+  "description": "An implementation of Interval Tree Clocks in TypeScript",
+  "main": "build/index.js",
+  "types": "build/index.d.ts",
+  "scripts": {
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ggabriel96/itc4ts.git"
+  },
+  "keywords": [
+    "causality",
+    "event",
+    "ordering",
+    "time",
+    "tree",
+    "distributed computing",
+    "typescript"
+  ],
+  "author": "Gabriel Batista Galli",
+  "license": "LGPL-3.0",
+  "bugs": {
+    "url": "https://github.com/ggabriel96/itc4ts/issues"
+  },
+  "homepage": "https://github.com/ggabriel96/itc4ts#readme"
+}

@@ -15,7 +15,10 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-class NonLeafOccurrence extends Occurrence {
+import { Occurrence } from "./Occurrence";
+import { Occurrences } from "./Occurrences";
+
+export class NonLeafOccurrence extends Occurrence {
 
   private readonly _value: number;
   private readonly _left: Occurrence;
@@ -61,18 +64,18 @@ class NonLeafOccurrence extends Occurrence {
   }
 
   public lift(m: number): Occurrence {
-    return Occurrence.with(this.value + m, this.left, this.right);
+    return Occurrences.with(this.value + m, this.left, this.right);
   }
 
   public sink(m: number): Occurrence {
-    return Occurrence.with(this.value - m, this.left, this.right);
+    return Occurrences.with(this.value - m, this.left, this.right);
   }
 
   public normalize(): Occurrence {
     if (this.left.isLeaf() && this.right.isLeaf() && this.left.value == this.right.value)
-      return Occurrence.with(this.value + this.left.value);
+      return Occurrences.with(this.value + this.left.value);
     let min: number = Math.min(this.left.min(), this.right.min());
-    return Occurrence.with(this.value + min, this.left.sink(min), this.right.sink(min));
+    return Occurrences.with(this.value + min, this.left.sink(min), this.right.sink(min));
   }
 
   public leq(other: Occurrence): boolean {
@@ -98,13 +101,13 @@ class NonLeafOccurrence extends Occurrence {
 
   public join(other: Occurrence): Occurrence {
     if (other.isLeaf())
-      return this.join(Occurrence.with(other.value, Occurrence.zero(), Occurrence.zero()));
+      return this.join(Occurrences.with(other.value, Occurrences.zero(), Occurrences.zero()));
     return this.joinNonLeaf(other);
   }
 
   private joinNonLeaf(other: Occurrence): Occurrence {
     if (this.value > other.value) return other.join(this);
-    let join: Occurrence = Occurrence.with(this.value, this.leftJoin(other), this.rightJoin(other));
+    let join: Occurrence = Occurrences.with(this.value, this.leftJoin(other), this.rightJoin(other));
     return join.normalize();
   }
 
@@ -129,5 +132,5 @@ class NonLeafOccurrence extends Occurrence {
   public toString(): string {
     return "(" + this.value + ", " + this.left + ", " + this.right + ")";
   }
-  
+
 }

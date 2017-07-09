@@ -15,7 +15,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-abstract class Occurrence {
+export abstract class Occurrence {
 
   public abstract get value(): number;
   public abstract get left(): Occurrence;
@@ -36,14 +36,4 @@ abstract class Occurrence {
   public abstract join(other: Occurrence): Occurrence;
   public abstract equals(object: any): boolean;
 
-  public static zero(): Occurrence {
-    return Occurrence.with(0);
-  }
-
-  public static with(value: number, left?: Occurrence, right?: Occurrence) {
-    if (typeof left !== undefined && typeof right !== undefined)
-      return new NonLeafOccurrence(value, left, right);
-    return new LeafOccurrence(value);
-  }
-  
 }
