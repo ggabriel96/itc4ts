@@ -15,6 +15,7 @@
     "event",
     "ordering",
     "time",
+    "clock",
     "tree",
     "distributed computing",
     "typescript"
