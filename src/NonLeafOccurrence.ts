@@ -20,27 +20,15 @@ import { Occurrences } from "./Occurrences";
 
 export class NonLeafOccurrence extends Occurrence {
 
-  private readonly _value: number;
-  private readonly _left: Occurrence;
-  private readonly _right: Occurrence;
+  public value: number;
+  public left: Occurrence;
+  public right: Occurrence;
 
-  constructor(value: number, left: Occurrence, right: Occurrence) {
+  constructor(value?: number, left?: Occurrence, right?: Occurrence) {
     super();
-    this._value = value;
-    this._left = left;
-    this._right = right;
-  }
-
-  public get value(): number {
-    return this._value;
-  }
-
-  public get left(): Occurrence {
-    return this._left;
-  }
-
-  public get right(): Occurrence {
-    return this._right;
+    this.value = value;
+    this.left = left;
+    this.right = right;
   }
 
   public max(): number {
@@ -96,7 +84,7 @@ export class NonLeafOccurrence extends Occurrence {
   }
 
   private leqNonLeafs(other: Occurrence): boolean {
-    return this.value <= other.value && this.liftedLeft(this).leq(this.liftedLeft(other)) &&this.liftedRight(this).leq(this.liftedRight(other));
+    return this.value <= other.value && this.liftedLeft(this).leq(this.liftedLeft(other)) && this.liftedRight(this).leq(this.liftedRight(other));
   }
 
   public join(other: Occurrence): Occurrence {

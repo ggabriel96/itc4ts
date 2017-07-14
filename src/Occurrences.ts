@@ -18,6 +18,7 @@
 import { NonLeafOccurrence } from "./NonLeafOccurrence";
 import { LeafOccurrence } from "./LeafOccurrence";
 import { Occurrence } from "./Occurrence";
+import { ParseState } from "./ParseState";
 
 export class Occurrences {
 
@@ -26,9 +27,63 @@ export class Occurrences {
   }
 
   public static with(value: number, left?: Occurrence, right?: Occurrence) {
-    if (typeof left !== "undefined" && typeof right !== "undefined")
+    if (left !== undefined && right !== undefined)
       return new NonLeafOccurrence(value, left, right);
     return new LeafOccurrence(value);
+  }
+
+  public static fromString(occurrence: string): Occurrence {
+    let node: Occurrence;
+    let nodeStack: Occurrence[] = [];
+    let stateStack: ParseState[] = [ParseState.VALUE];
+    for (let i: number = 0; stateStack.length > 0; i++) {
+      if (occurrence[i] === ' ' || occurrence[i] === ',') continue;
+      if (occurrence[i] === ')') {
+        node = nodeStack.pop();
+        continue;
+      }
+      let state: ParseState = stateStack.pop();
+      switch (state) {
+        case ParseState.VALUE:
+          if (occurrence[i] === '(') {
+            nodeStack.push(new NonLeafOccurrence());
+            stateStack.push(ParseState.RIGHT);
+            stateStack.push(ParseState.LEFT);
+            stateStack.push(ParseState.VALUE);
+          } else {
+            if (nodeStack.length === 0) node = new LeafOccurrence();
+            else node = nodeStack[nodeStack.length - 1];
+            node.value = Number(occurrence[i]);
+          }
+          break;
+        case ParseState.LEFT:
+          if (occurrence[i] === '(') {
+            node = new NonLeafOccurrence();
+            nodeStack[nodeStack.length - 1].left = node;
+            nodeStack.push(node);
+            stateStack.push(ParseState.RIGHT);
+            stateStack.push(ParseState.LEFT);
+            stateStack.push(ParseState.VALUE);
+          } else {
+            nodeStack[nodeStack.length - 1].left = new LeafOccurrence(Number(occurrence[i]));
+          }
+          break;
+        case ParseState.RIGHT:
+          if (occurrence[i] === '(') {
+            node = new NonLeafOccurrence();
+            nodeStack[nodeStack.length - 1].right = node;
+            nodeStack.push(node);
+            stateStack.push(ParseState.RIGHT);
+            stateStack.push(ParseState.LEFT);
+            stateStack.push(ParseState.VALUE);
+          } else {
+            nodeStack[nodeStack.length - 1].right = new LeafOccurrence(Number(occurrence[i]));
+          }
+          break;
+      }
+    }
+    while (nodeStack.length > 0) node = nodeStack.pop();
+    return node;
   }
 
 }

@@ -18,8 +18,11 @@
 export abstract class Occurrence {
 
   public abstract get value(): number;
+  public abstract set value(value: number);
   public abstract get left(): Occurrence;
+  public abstract set left(left: Occurrence);
   public abstract get right(): Occurrence;
+  public abstract set right(right: Occurrence);
   public abstract min(): number;
   public abstract max(): number;
 

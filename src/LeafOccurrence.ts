@@ -20,15 +20,11 @@ import { Occurrences } from "./Occurrences";
 
 export class LeafOccurrence extends Occurrence {
 
-  private readonly _value: number;
+  public value: number;
 
   constructor(value?: number) {
     super();
-    this._value = value || 0;
-  }
-
-  public get value(): number {
-    return this._value;
+    this.value = value || 0;
   }
 
   public get left(): Occurrence {

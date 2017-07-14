@@ -32,6 +32,10 @@ export class Stamp {
     this.occurrence = occurrence || Occurrences.zero();
   }
 
+  public static fromString(occurrence: string): Stamp {
+    return new Stamp(IDs.one(), Occurrences.fromString(occurrence));
+  }
+
   public fork(): Stamp[] {
     let ids: ID[] = this.id.split();
     return [
