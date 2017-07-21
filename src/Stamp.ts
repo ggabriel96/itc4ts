@@ -67,8 +67,8 @@ export class Stamp {
 
   public toJSON(): any {
     return {
-      "id": this.id,
-      "occurrence": this.occurrence
+      "id": this.id.toString(),
+      "occurrence": this.occurrence.toString()
     };
   }
 
