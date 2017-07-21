@@ -1,7 +1,9 @@
 import { Stamp } from "./Stamp";
 // "(0,2,(0,1,0))"
-let stamp: Stamp = Stamp.fromString("(1, (2,1,3), (0, (1, 0, 2), 0))")
-console.log("stamp = " + stamp + "\n");
+let test = new Stamp().fork()[1].fork()[1].fork()[1].fork()[1].fork()[1].fork()[1].fork()[1];
+console.log(test.id.toString())
+let stamp: Stamp = Stamp.fromString(test.id.toString(), "(1, (2,1,3), (0, (1, 0, 2), 0))")
+console.log(stamp.id.toString())
 
 // let fs: Stamp[] = stamp.fork();
 // console.log("fs[0] = " + fs[0]);

@@ -1,2 +1,4 @@
 src/
+build/main.js
+build/main.d.ts
 tsconfig.json

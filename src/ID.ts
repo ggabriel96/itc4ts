@@ -17,8 +17,11 @@
 
 export abstract class ID {
 
+  public abstract get value(): number;
   public abstract get left(): ID;
+  public abstract set left(left: ID);
   public abstract get right(): ID;
+  public abstract set right(right: ID);
   public abstract isLeaf(): boolean;
   public abstract isZero(): boolean;
   public abstract isOne(): boolean;

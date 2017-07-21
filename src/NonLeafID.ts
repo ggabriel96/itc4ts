@@ -20,21 +20,17 @@ import { IDs } from "./IDs";
 
 export class NonLeafID extends ID {
 
-  private readonly _left: ID;
-  private readonly _right: ID;
+  public left: ID;
+  public right: ID;
 
-  constructor(left: ID, right: ID) {
+  constructor(left?: ID, right?: ID) {
     super();
-    this._left = left;
-    this._right = right;
+    this.left = left;
+    this.right = right;
   }
 
-  public get left(): ID {
-    return this._left;
-  }
-
-  public get right(): ID {
-    return this._right;
+  public get value(): number {
+    throw new ReferenceError("Cannot get value on an internal node");
   }
 
   public isOne(): boolean {

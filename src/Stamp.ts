@@ -24,16 +24,16 @@ import { Occurrences } from "./Occurrences";
 
 export class Stamp {
 
+  public readonly id: ID;
   public readonly occurrence: Occurrence;
-  private readonly id: ID;
 
   constructor(id?: ID, occurrence?: Occurrence) {
     this.id = id || IDs.one();
     this.occurrence = occurrence || Occurrences.zero();
   }
 
-  public static fromString(occurrence: string): Stamp {
-    return new Stamp(IDs.one(), Occurrences.fromString(occurrence));
+  public static fromString(id: string, occurrence: string): Stamp {
+    return new Stamp(IDs.fromString(id), Occurrences.fromString(occurrence));
   }
 
   public fork(): Stamp[] {
@@ -63,6 +63,13 @@ export class Stamp {
 
   public toString(): string {
     return "(" + this.id + ", " + this.occurrence + ")";
+  }
+
+  public toJSON(): any {
+    return {
+      "id": this.id,
+      "occurrence": this.occurrence
+    };
   }
 
   public equals(o: any): boolean {

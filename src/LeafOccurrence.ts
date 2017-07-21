@@ -31,8 +31,16 @@ export class LeafOccurrence extends Occurrence {
     return null;
   }
 
+  public set left(left: Occurrence) {
+    throw new ReferenceError("Cannot set left node on a leaf");
+  }
+
   public get right(): Occurrence {
     return null;
+  }
+
+  public set right(right: Occurrence) {
+    throw new ReferenceError("Cannot set right node on a leaf");
   }
 
   public max(): number {

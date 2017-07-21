@@ -20,15 +20,11 @@ import { ID } from "./ID";
 
 export class LeafID extends ID {
 
-  private readonly _value: number;
+  public readonly value: number;
 
   constructor(value: number) {
     super();
-    this._value = value;
-  }
-
-  public get value(): number {
-    return this._value;
+    this.value = value;
   }
 
   public get left(): ID {
